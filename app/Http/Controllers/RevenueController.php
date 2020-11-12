@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Balance;
 use App\Models\Transaction;
 use App\Traits\UploadFile;
 use Illuminate\Http\Request;
@@ -56,7 +57,16 @@ class RevenueController extends Controller
 
         $request['type'] = 'revenue';
 
-        return Transaction::create($request->except('file'));
+        $transaction = Transaction::create($request->except('file'));
+        $latestBalance = Balance::orderBy('id', 'desc')->first();
+        $balance = $latestBalance ? $latestBalance->balance : 0;
+
+        $transaction->balance()->create([
+            'time' => now(),
+            'discharge' => $transaction->amount,
+            'charge' => 0,
+            'balance' => ($balance + $transaction->amount)
+        ]);
     }
 
     /**

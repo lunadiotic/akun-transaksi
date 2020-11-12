@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Transaction extends Model
+class Balance extends Model
 {
     protected $guarded = [];
 
-    public function balance()
+    public function transaction()
     {
-        return $this->hasMany(Balance::class);
+        return $this->belongsTo(Transaction::class);
     }
 }
