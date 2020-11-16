@@ -6,6 +6,7 @@ use App\Models\Balance;
 use App\Models\Transaction;
 use App\Traits\UploadFile;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PaymentController extends Controller
 {
@@ -16,9 +17,25 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $data = Transaction::where('type', 'payment')->with('category');
+            return DataTables::of($data)
+                ->addColumn('action', function ($data) {
+                    return view('layouts.partials._action', [
+                        'model' => $data,
+                        'show_url' => route('category.show', $data->id),
+                        'edit_url' => route('category.edit', $data->id),
+                        'delete_url' => route('category.destroy', $data->id)
+                    ]);
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+
+        return view('pages.payment.index');
     }
 
     /**

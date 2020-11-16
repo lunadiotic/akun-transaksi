@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Contracts\DataTable;
+use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
 {
@@ -12,9 +14,25 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $data = Category::with('parent');
+            return DataTables::of($data)
+                ->addColumn('action', function ($data) {
+                    return view('layouts.partials._action', [
+                        'model' => $data,
+                        'show_url' => route('category.show', $data->id),
+                        'edit_url' => route('category.edit', $data->id),
+                        'delete_url' => route('category.destroy', $data->id)
+                    ]);
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+
+        return view('pages.category.index');
     }
 
     /**
@@ -95,7 +113,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
+        return $category = Category::findOrFail($id);
 
         if ($category->sub) {
             foreach ($category->sub as $sub) {

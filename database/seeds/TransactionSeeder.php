@@ -24,7 +24,8 @@ class TransactionSeeder extends Seeder
             'date' => now(),
             'amount' => 50000000,
             'description' => 'donasi',
-            'attachment' => null
+            'attachment' => null,
+            'type' => 'revenue'
         ];
 
         $revenue = Transaction::create($revenueInput);
@@ -32,7 +33,7 @@ class TransactionSeeder extends Seeder
             'time' => now(),
             'discharge' => $revenue->amount,
             'charge' => 0,
-            'balance' => (0 + $revenue->amount)
+            'balance' => (0 + $revenue->amount),
         ]);
 
         $paymentInput = [
@@ -40,7 +41,8 @@ class TransactionSeeder extends Seeder
             'date' => now(),
             'amount' => 2000000,
             'description' => 'bill',
-            'attachment' => null
+            'attachment' => null,
+            'type' => 'payment'
         ];
 
         $payment = Transaction::create($paymentInput);

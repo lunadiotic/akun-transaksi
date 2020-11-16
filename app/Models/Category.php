@@ -8,8 +8,8 @@ class Category extends Model
 {
     protected $guarded = [];
 
-    public function sub()
+    public function parent()
     {
-        return $this->hasMany(Category::class, 'parent_id');
+        return $this->belongsTo(Category::class, 'parent_id');
     }
 }

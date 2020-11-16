@@ -63,13 +63,13 @@
                     <div class="collapse" id="sidebarTransaction">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="#">Category</a>
+                                <a href="{{ route('category.index') }}">Category</a>
                             </li>
                             <li>
-                                <a href="#">Revenue</a>
+                                <a href="{{ route('revenue.index') }}">Revenue</a>
                             </li>
                             <li>
-                                <a href="#">Payment</a>
+                                <a href="{{ route('payment.index') }}">Payment</a>
                             </li>
                         </ul>
                     </div>
