@@ -20,7 +20,7 @@ class CreateTransactionsTable extends Migration
             $table->decimal('amount', 15,2);
             $table->text('description');
             $table->string('attachment')->nullable();
-            $table->enum('type', ['revenue', 'payment']);
+            $table->enum('type', ['revenue', 'expense']);
             $table->timestamps();
         });
     }

@@ -17,8 +17,8 @@ class CreateBalancesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('transaction_id');
             $table->timestamp('time');
-            $table->decimal('discharge', 15, 2)->default(0);
-            $table->decimal('charge', 15, 2)->default(0);
+            $table->decimal('debit', 15, 2)->default(0);
+            $table->decimal('credit', 15, 2)->default(0);
             $table->decimal('balance', 15, 2)->default(0);
             $table->timestamps();
         });

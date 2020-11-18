@@ -20,7 +20,7 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Transaction::where('type', 'payment')->with('category');
+            $data = Transaction::where('type', 'expense')->with('category');
             return DataTables::of($data)
                 ->addColumn('action', function ($data) {
                     return view('layouts.partials._action', [

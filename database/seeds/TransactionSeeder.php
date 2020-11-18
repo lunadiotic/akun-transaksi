@@ -14,8 +14,8 @@ class TransactionSeeder extends Seeder
     public function run()
     {
         $category = [
-            ['title' => 'income', 'type' => 'income'],
-            ['title' => 'outcome', 'type' => 'outcome']
+            ['title' => 'Revenue', 'type' => 'revenue'],
+            ['title' => 'Expense', 'type' => 'expense']
         ];
         Category::insert($category);
 
@@ -31,8 +31,8 @@ class TransactionSeeder extends Seeder
         $revenue = Transaction::create($revenueInput);
         $revenue->balance()->create([
             'time' => now(),
-            'discharge' => $revenue->amount,
-            'charge' => 0,
+            'debit' => $revenue->amount,
+            'credit' => 0,
             'balance' => (0 + $revenue->amount),
         ]);
 
@@ -42,15 +42,15 @@ class TransactionSeeder extends Seeder
             'amount' => 2000000,
             'description' => 'bill',
             'attachment' => null,
-            'type' => 'payment'
+            'type' => 'expense'
         ];
 
         $payment = Transaction::create($paymentInput);
 
         $payment->balance()->create([
             'time' => now(),
-            'discharge' => 0,
-            'charge' => $payment->amount,
+            'debit' => 0,
+            'credit' => $payment->amount,
             'balance' => (50000000 - $payment->amount)
         ]);
 

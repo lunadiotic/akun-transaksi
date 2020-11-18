@@ -42,7 +42,10 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'category' => Category::pluck('title', 'id')
+        ];
+        return view('pages.category.create', $data);
     }
 
     /**
@@ -55,11 +58,14 @@ class CategoryController extends Controller
     {
         $data = $this->validate($request, [
             'type' => 'required',
+            'code' => 'required',
             'title' => 'required',
             'parent_id' => 'sometimes|numeric|nullable'
         ]);
 
-        return Category::create($data);
+        Category::create($data);
+
+        return redirect()->route('category.index');
     }
 
     /**
@@ -81,7 +87,14 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::findOrFail($id);
+
+        $data = [
+            'category' => Category::pluck('title', 'id'),
+            'data' => $category
+        ];
+
+        return view('pages.category.edit', $data);
     }
 
     /**
@@ -101,8 +114,9 @@ class CategoryController extends Controller
             'parent_id' => 'sometimes|numeric|nullable'
         ]);
 
-        return $category->update($data);
+        $category->update($data);
 
+        return redirect()->route('category.index');
     }
 
     /**
@@ -113,7 +127,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        return $category = Category::findOrFail($id);
+        $category = Category::findOrFail($id);
 
         if ($category->sub) {
             foreach ($category->sub as $sub) {
@@ -124,6 +138,6 @@ class CategoryController extends Controller
 
         $category->delete();
 
-        return 'true';
+        return redirect()->route('category.index');
     }
 }
