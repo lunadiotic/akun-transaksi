@@ -43,7 +43,9 @@ class TransactionSeeder extends Seeder
         $payment = Transaction::create($paymentInput);
 
         Balance::create([
-            'amount' => 48000000
+            'balance' => 48000000,
+            'payment' => 2000000,
+            'revenue' => 50000000
         ]);
 
     }

@@ -15,7 +15,9 @@ class CreateBalancesTable extends Migration
     {
         Schema::create('balances', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->decimal('amount', 20, 2);
+            $table->decimal('balance', 20, 2);
+            $table->decimal('payment', 20, 2);
+            $table->decimal('revenue', 20, 2);
             $table->timestamps();
         });
     }

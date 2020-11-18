@@ -48,7 +48,7 @@
                 <li class="menu-title">Navigation</li>
 
                 <li>
-                    <a href="#">
+                    <a href="{{ route('home') }}">
                         <i data-feather="airplay"></i>
                         <span> Dashboard </span>
                     </a>
