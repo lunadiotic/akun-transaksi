@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Balance;
+use App\Models\Category;
 use App\Models\Transaction;
 use App\Traits\UploadFile;
 use Illuminate\Http\Request;
@@ -25,9 +26,9 @@ class PaymentController extends Controller
                 ->addColumn('action', function ($data) {
                     return view('layouts.partials._action', [
                         'model' => $data,
-                        'show_url' => route('category.show', $data->id),
-                        'edit_url' => route('category.edit', $data->id),
-                        'delete_url' => route('category.destroy', $data->id)
+                        'show_url' => route('payment.show', $data->id),
+                        'edit_url' => route('payment.edit', $data->id),
+                        'delete_url' => route('payment.destroy', $data->id)
                     ]);
                 })
                 ->rawColumns(['action'])
@@ -45,7 +46,11 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'category' => Category::where('type', 'expense')->pluck('title', 'id')
+        ];
+
+        return view('pages.payment.create', $data);
     }
 
     /**
@@ -56,23 +61,24 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->all();
         $this->validate($request, [
             'category_id' => 'required',
             'date' => 'required|date',
             'amount' => 'required|numeric',
             'description' => 'required',
-            'file' => 'sometimes|mimes:jpeg,png|nullable'
+            'file' => 'sometimes|nullable'
         ]);
 
         if ($request->file('file')) {
             $request['attachment'] = $this->uploadFile(
                 $request->file('file'),
-                'payment',
-                'payment'
+                'expense',
+                'expense'
             );
         }
 
-        $request['type'] = 'payment';
+        $request['type'] = 'expense';
 
         $transaction = Transaction::create($request->except('file'));
         $latestBalance = Balance::orderBy('id', 'desc')->first();
@@ -80,10 +86,12 @@ class PaymentController extends Controller
 
         $transaction->balance()->create([
             'time' => now(),
-            'discharge' => 0,
-            'charge' => $transaction->amount,
+            'debit' => 0,
+            'credit' => $transaction->amount,
             'balance' => ($balance - $transaction->amount)
         ]);
+
+        return redirect()->route('payment.index');
     }
 
     /**
@@ -105,7 +113,14 @@ class PaymentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $payment = Transaction::findOrFail($id);
+
+        $data = [
+            'category' => Category::where('type', 'expense')->pluck('title', 'id'),
+            'payment' => $payment
+        ];
+
+        return view('pages.payment.edit', $data);
     }
 
     /**
@@ -124,21 +139,22 @@ class PaymentController extends Controller
             'date' => 'required|date',
             'amount' => 'required|numeric',
             'description' => 'required',
-            'file' => 'sometimes|mimes:jpeg,png|nullable'
+            'file' => 'sometimes|nullable'
         ]);
 
         if ($request->file('file')) {
             $request['attachment'] = $this->uploadFile(
                 $request->file('file'),
-                'payment',
-                'payment',
+                'expense',
+                'expense',
                 true,
                 $payment->attachment
             );
         }
 
         $payment->update($request->except('file'));
-        return 'true';
+
+        return redirect()->route('payment.index');
     }
 
     /**
@@ -157,6 +173,6 @@ class PaymentController extends Controller
 
         $payment->delete();
 
-        return true;
+        return redirect()->route('payment.index');
     }
 }

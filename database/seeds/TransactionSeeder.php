@@ -14,8 +14,8 @@ class TransactionSeeder extends Seeder
     public function run()
     {
         $category = [
-            ['title' => 'Revenue', 'type' => 'revenue'],
-            ['title' => 'Expense', 'type' => 'expense']
+            ['code' => '1.0', 'title' => 'Revenue', 'type' => 'revenue'],
+            ['code' => '2.0', 'title' => 'Expense', 'type' => 'expense']
         ];
         Category::insert($category);
 

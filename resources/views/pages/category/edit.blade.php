@@ -28,7 +28,7 @@
                     <h4 class="header-title">Form Input</h4>
                     <form action="{{ route('category.update', $data->id) }}" method="POST">
                         @csrf @method('PUT')
-                        <input type="hidden" name="id" value="{{ $data->id }}}">
+                        <input type="hidden" name="id" value="{{ $data->id }}">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="" class="col-form-label">Category</label>
