@@ -92,7 +92,8 @@ class RevenueController extends Controller
         $transaction = Transaction::create($request->except('file'));
         $balance = Balance::first();
         $balance->update([
-            'amount' => $balance->amount + $transaction->amount
+            'balance' => $balance->balance + $transaction->amount,
+            'revenue' => $balance->revenue + $transaction->amount,
         ]);
 
         return redirect()->route('revenue.index');
@@ -158,7 +159,8 @@ class RevenueController extends Controller
 
         $balance = Balance::first();
         $balance->update([
-            'amount' => ($balance->amount - $revenue->amount) + $request->amount
+            'balance' => ($balance->balance - $revenue->amount) + $request->amount,
+            'revenue' => ($balance->payment - $revenue->amount) + $request->amount
         ]);
 
         $revenue->update($request->except('file'));
@@ -178,7 +180,8 @@ class RevenueController extends Controller
 
         $balance = Balance::first();
         $balance->update([
-            'amount' => ($balance->amount - $revenue->amount)
+            'balance' => ($balance->balance - $revenue->amount),
+            'revenue' => ($balance->payment - $revenue->amount)
         ]);
 
         if ($revenue->attachment) {
