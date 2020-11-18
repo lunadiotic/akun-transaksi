@@ -66,10 +66,10 @@
                                 <a href="{{ route('category.index') }}">Category</a>
                             </li>
                             <li>
-                                <a href="{{ route('revenue.index') }}">Revenue</a>
+                                <a href="{{ route('payment.index') }}">Payment</a>
                             </li>
                             <li>
-                                <a href="{{ route('payment.index') }}">Payment</a>
+                                <a href="{{ route('revenue.index') }}">Revenue</a>
                             </li>
                         </ul>
                     </div>

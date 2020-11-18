@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Balance;
 use App\Models\Category;
 use App\Models\Transaction;
 use Illuminate\Database\Seeder;
@@ -28,13 +29,7 @@ class TransactionSeeder extends Seeder
             'type' => 'revenue'
         ];
 
-        $revenue = Transaction::create($revenueInput);
-        $revenue->balance()->create([
-            'time' => now(),
-            'debit' => $revenue->amount,
-            'credit' => 0,
-            'balance' => (0 + $revenue->amount),
-        ]);
+        Transaction::create($revenueInput);
 
         $paymentInput = [
             'category_id' => 2,
@@ -47,11 +42,8 @@ class TransactionSeeder extends Seeder
 
         $payment = Transaction::create($paymentInput);
 
-        $payment->balance()->create([
-            'time' => now(),
-            'debit' => 0,
-            'credit' => $payment->amount,
-            'balance' => (50000000 - $payment->amount)
+        Balance::create([
+            'amount' => 48000000
         ]);
 
     }

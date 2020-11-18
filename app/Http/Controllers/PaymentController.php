@@ -14,6 +14,16 @@ class PaymentController extends Controller
     use UploadFile;
 
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -81,14 +91,9 @@ class PaymentController extends Controller
         $request['type'] = 'expense';
 
         $transaction = Transaction::create($request->except('file'));
-        $latestBalance = Balance::orderBy('id', 'desc')->first();
-        $balance = $latestBalance ? $latestBalance->balance : 0;
-
-        $transaction->balance()->create([
-            'time' => now(),
-            'debit' => 0,
-            'credit' => $transaction->amount,
-            'balance' => ($balance - $transaction->amount)
+        $balance = Balance::first();
+        $balance->update([
+            'amount' => $balance->amount - $transaction->amount
         ]);
 
         return redirect()->route('payment.index');
@@ -152,6 +157,11 @@ class PaymentController extends Controller
             );
         }
 
+        $balance = Balance::first();
+        $balance->update([
+            'amount' => ($balance->amount + $payment->amount) - $request->amount
+        ]);
+
         $payment->update($request->except('file'));
 
         return redirect()->route('payment.index');
@@ -166,6 +176,11 @@ class PaymentController extends Controller
     public function destroy($id)
     {
         $payment = Transaction::findOrFail($id);
+
+        $balance = Balance::first();
+        $balance->update([
+            'amount' => ($balance->amount + $payment->amount)
+        ]);
 
         if ($payment->attachment) {
             $this->deleteFile($payment->attachment, 'payment');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Balance;
+use App\Models\Category;
 use App\Models\Transaction;
 use App\Traits\UploadFile;
 use Illuminate\Http\Request;
@@ -11,6 +12,16 @@ use Yajra\DataTables\Facades\DataTables;
 class RevenueController extends Controller
 {
     use UploadFile;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     /**
      * Display a listing of the resource.
@@ -25,9 +36,9 @@ class RevenueController extends Controller
                 ->addColumn('action', function ($data) {
                     return view('layouts.partials._action', [
                         'model' => $data,
-                        'show_url' => route('category.show', $data->id),
-                        'edit_url' => route('category.edit', $data->id),
-                        'delete_url' => route('category.destroy', $data->id)
+                        'show_url' => route('revenue.show', $data->id),
+                        'edit_url' => route('revenue.edit', $data->id),
+                        'delete_url' => route('revenue.destroy', $data->id)
                     ]);
                 })
                 ->rawColumns(['action'])
@@ -45,7 +56,11 @@ class RevenueController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'category' => Category::where('type', 'revenue')->pluck('title', 'id')
+        ];
+
+        return view('pages.revenue.create', $data);
     }
 
     /**
@@ -75,15 +90,12 @@ class RevenueController extends Controller
         $request['type'] = 'revenue';
 
         $transaction = Transaction::create($request->except('file'));
-        $latestBalance = Balance::orderBy('id', 'desc')->first();
-        $balance = $latestBalance ? $latestBalance->balance : 0;
-
-        $transaction->balance()->create([
-            'time' => now(),
-            'discharge' => $transaction->amount,
-            'charge' => 0,
-            'balance' => ($balance + $transaction->amount)
+        $balance = Balance::first();
+        $balance->update([
+            'amount' => $balance->amount + $transaction->amount
         ]);
+
+        return redirect()->route('revenue.index');
     }
 
     /**
@@ -105,7 +117,14 @@ class RevenueController extends Controller
      */
     public function edit($id)
     {
-        //
+        $revenue = Transaction::findOrFail($id);
+
+        $data = [
+            'category' => Category::where('type', 'revenue')->pluck('title', 'id'),
+            'revenue' => $revenue
+        ];
+
+        return view('pages.revenue.edit', $data);
     }
 
     /**
@@ -137,8 +156,14 @@ class RevenueController extends Controller
             );
         }
 
+        $balance = Balance::first();
+        $balance->update([
+            'amount' => ($balance->amount - $revenue->amount) + $request->amount
+        ]);
+
         $revenue->update($request->except('file'));
-        return 'true';
+
+        return redirect()->route('revenue.index');
     }
 
     /**
@@ -151,12 +176,17 @@ class RevenueController extends Controller
     {
         $revenue = Transaction::findOrFail($id);
 
+        $balance = Balance::first();
+        $balance->update([
+            'amount' => ($balance->amount - $revenue->amount)
+        ]);
+
         if ($revenue->attachment) {
             $this->deleteFile($revenue->attachment, 'revenue');
         }
 
         $revenue->delete();
 
-        return true;
+        return redirect()->route('revenue.index');
     }
 }
