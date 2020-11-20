@@ -18,7 +18,7 @@ class CategoryController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -68,7 +68,6 @@ class CategoryController extends Controller
     {
         $data = $this->validate($request, [
             'type' => 'required',
-            'code' => 'required',
             'title' => 'required',
             'parent_id' => 'sometimes|numeric|nullable'
         ]);
@@ -86,7 +85,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        return view('pages.category.show', compact('category'));
     }
 
     /**

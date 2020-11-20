@@ -107,7 +107,8 @@ class RevenueController extends Controller
      */
     public function show($id)
     {
-        //
+        $revenue = Transaction::findOrFail($id);
+        return view('pages.revenue.show', compact('revenue'));
     }
 
     /**

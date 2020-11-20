@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     protected $guarded = [];
+    protected $dates = [
+        'date'
+    ];
 
     public function balance()
     {

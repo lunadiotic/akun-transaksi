@@ -108,7 +108,8 @@ class PaymentController extends Controller
      */
     public function show($id)
     {
-        //
+        $payment = Transaction::findOrFail($id);
+        return view('pages.payment.show', compact('payment'));
     }
 
     /**
