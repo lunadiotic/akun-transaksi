@@ -84,6 +84,14 @@
                         <span> Reports </span>
                     </a>
                 </li>
+
+                <li class="menu-title mt-2">Settings</li>
+                <li>
+                    <a href="{{ route('setting.index') }}">
+                        <i data-feather="settings"></i>
+                        <span> Settings </span>
+                    </a>
+                </li>
             </ul>
 
         </div>

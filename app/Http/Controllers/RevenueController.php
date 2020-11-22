@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Balance;
 use App\Models\Category;
+use App\Models\Setting;
 use App\Models\Transaction;
 use App\Traits\UploadFile;
 use Illuminate\Http\Request;
@@ -108,7 +109,8 @@ class RevenueController extends Controller
     public function show($id)
     {
         $revenue = Transaction::findOrFail($id);
-        return view('pages.revenue.show', compact('revenue'));
+        $setting = Setting::first();
+        return view('pages.revenue.show', compact('revenue', 'setting'));
     }
 
     /**

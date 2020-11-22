@@ -21,3 +21,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('category', 'CategoryController');
 Route::resource('revenue', 'RevenueController');
 Route::resource('payment', 'PaymentController');
+Route::resource('setting', 'SettingController')->only(['index', 'store']);

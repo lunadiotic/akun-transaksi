@@ -29,13 +29,13 @@
                         <div class="auth-logo">
                             <div class="logo logo-dark">
                                 <span class="logo-lg">
-                                    <img src="{{ asset('/assets/images/logo-dark.png') }}" alt="" height="22">
+                                    <img src="{{ asset('/storage/logo/' . $setting->logo) }}" alt="" height="100">
                                 </span>
                             </div>
 
                             <div class="logo logo-light">
                                 <span class="logo-lg">
-                                    <img src="{{ asset('/assets/images/logo-light.png') }}" alt="" height="22">
+                                    <img src="{{ asset('/storage/logo/' . $setting->logo) }}" alt="" height="100">
                                 </span>
                             </div>
                         </div>
@@ -46,27 +46,14 @@
                 </div>
 
                 <div class="row mt-3">
-                    <div class="col-sm-4">
+                    <div class="col-sm-6">
                         <h6>Billing Address</h6>
                         <address>
-                            Stanley Jones<br>
-                            795 Folsom Ave, Suite 600<br>
-                            San Francisco, CA 94107<br>
-                            <abbr title="Phone">P:</abbr> (123) 456-7890
+                            {!! $setting->address !!}
                         </address>
                     </div> <!-- end col -->
 
-                    <div class="col-sm-4">
-                        <h6>Shipping Address</h6>
-                        <address>
-                            Stanley Jones<br>
-                            795 Folsom Ave, Suite 600<br>
-                            San Francisco, CA 94107<br>
-                            <abbr title="Phone">P:</abbr> (123) 456-7890
-                        </address>
-                    </div> <!-- end col -->
-
-                    <div class="col-sm-4">
+                   <div class="col-sm-6">
                         <div class="mt-3 float-right">
                             <p class="m-b-10"><strong>Date : </strong> <span class="float-right"> &nbsp;&nbsp;&nbsp;&nbsp; {{ $payment->date->format('d M Y') }}</span></p>
                             <p class="m-b-10"><strong>Type : </strong> <span class="float-right"><span class="badge badge-primary">{{ $payment->type }}</span></span></p>
@@ -83,6 +70,7 @@
                                 <tr><th>#</th>
                                     <th>Detail</th>
                                     <th>Category</th>
+                                    <th>Receipt</th>
                                     <th style="width: 20%" class="text-right">Total</th>
                                 </tr></thead>
                                 <tbody>
@@ -94,7 +82,12 @@
                                     <td>
                                         <b>{{ $payment->category->title }}</b>
                                     </td>
-                                    <td class="text-right">Rp{{ number_format($payment->amount, 0, ',', '.') }}</td>
+                                    <td style="width: 20%">
+                                        <img style="height: 250px" src="{{ asset('storage/expense/' . $payment->attachment) }}" alt="">
+                                    </td>
+                                    <td class="text-right">
+                                        Rp{{ number_format($payment->amount, 0, ',', '.') }}
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
