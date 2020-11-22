@@ -79,7 +79,7 @@
                 <li class="menu-title mt-2">Reports</li>
 
                 <li>
-                    <a href="#">
+                    <a href="{{ route('report.index') }}">
                         <i data-feather="bar-chart-2"></i>
                         <span> Reports </span>
                     </a>

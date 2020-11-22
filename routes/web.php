@@ -22,3 +22,4 @@ Route::resource('category', 'CategoryController');
 Route::resource('revenue', 'RevenueController');
 Route::resource('payment', 'PaymentController');
 Route::resource('setting', 'SettingController')->only(['index', 'store']);
+Route::resource('report', 'ReportController')->only(['index', 'store']);
