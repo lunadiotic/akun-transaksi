@@ -57,6 +57,7 @@
                         <div class="mt-3 float-right">
                             <p class="m-b-10"><strong>Date : </strong> <span class="float-right"> &nbsp;&nbsp;&nbsp;&nbsp; {{ $payment->date->format('d M Y') }}</span></p>
                             <p class="m-b-10"><strong>Type : </strong> <span class="float-right"><span class="badge badge-primary">{{ $payment->type }}</span></span></p>
+                            <p class="m-b-10"><strong>Order No. : </strong> <span class="float-right">{{ $payment->id }} </span></p>
                         </div>
                     </div><!-- end col -->
                 </div>
@@ -69,31 +70,54 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Detail</th>
-                                        <th>Category</th>
-                                        <th>Receipt</th>
-                                        <th style="width: 20%" class="text-right">Total</th>
+                                        <th>Item</th>
+                                        <th style="width: 10%" class="text-right">Price</th>
+                                        <th style="width: 10%" class="text-right">Qty</th>
+                                        <th style="width: 10%" class="text-right">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>
-                                        <b>{{ $payment->description }}</b>
-                                    </td>
-                                    <td>
-                                        <b>{{ $payment->category->title }}</b>
-                                    </td>
-                                    <td style="width: 20%">
-                                        <img style="height: 250px" src="{{ asset('storage/expense/' . $payment->attachment) }}" alt="">
-                                    </td>
-                                    <td class="text-right">
-                                        Rp{{ number_format($payment->amount, 0, ',', '.') }}
-                                    </td>
-                                </tr>
+                                    <?php $no = 1; ?>
+                                    @foreach ($payment->details as $item)
+                                    <tr>
+                                        <td>{{ $no }}</td>
+                                        <td>
+                                            <b>{{ $item->title }}</b>
+                                        </td>
+                                        <td class="text-right">
+                                            Rp{{ number_format($item->price, 0, ',', '.') }}
+                                        </td>
+                                        <td class="text-right">
+                                            <b>{{ $item->qty }}</b>
+                                        </td>
+                                        <td class="text-right">
+                                            Rp{{ number_format($item->total, 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                    <?php $no++ ?>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div> <!-- end table-responsive -->
+                    </div> <!-- end col -->
+                </div>
+                <!-- end row -->
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="clearfix pt-5">
+                            <h6 class="text-muted">Notes:</h6>
+
+                            <small class="text-muted">
+                                {{ $payment->notes }}
+                            </small>
+                        </div>
+                    </div> <!-- end col -->
+                    <div class="col-sm-6">
+                        <div class="float-right">
+                            <h3> Rp{{ number_format($payment->amount, 0, ',', '.') }}</h3>
+                        </div>
+                        <div class="clearfix"></div>
                     </div> <!-- end col -->
                 </div>
                 <!-- end row -->

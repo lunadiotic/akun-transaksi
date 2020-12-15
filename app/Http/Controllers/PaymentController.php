@@ -6,6 +6,7 @@ use App\Models\Balance;
 use App\Models\Category;
 use App\Models\Setting;
 use App\Models\Transaction;
+use App\Models\TransactionDetail;
 use App\Traits\UploadFile;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -72,12 +73,11 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
+        // return $request->all();
+
         $this->validate($request, [
             'category_id' => 'required',
             'date' => 'required|date',
-            'amount' => 'required|numeric',
-            'description' => 'required',
             'file' => 'sometimes|nullable'
         ]);
 
@@ -90,9 +90,29 @@ class PaymentController extends Controller
         }
 
         $request['type'] = 'expense';
+        $request['amount'] = 0;
+        $items = [];
 
-        $transaction = Transaction::create($request->except('file'));
+        foreach ($request->item as $item) {
+            $request['amount'] += ($item['qty'] * $item['price']);
+        }
+
+        $transaction = Transaction::create($request->except(['file', 'item']));
+
+        foreach ($request->item as $item) {
+            $items[] = [
+                'transaction_id' => $transaction->id,
+                'title' => $item['title'],
+                'qty' => $item['qty'],
+                'price' => $item['price'],
+                'total' => ($item['qty'] * $item['price'])
+            ];
+        }
+
+        TransactionDetail::insert($items);
+
         $balance = Balance::first();
+
         $balance->update([
             'balance' => $balance->balance - $transaction->amount,
             'payment' => $balance->payment + $transaction->amount,
