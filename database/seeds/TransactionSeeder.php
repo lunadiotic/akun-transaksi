@@ -24,7 +24,7 @@ class TransactionSeeder extends Seeder
             'category_id' => 1,
             'date' => now(),
             'amount' => 50000000,
-            'description' => 'donasi',
+            'notes' => 'donasi',
             'attachment' => null,
             'type' => 'revenue'
         ];
@@ -35,7 +35,7 @@ class TransactionSeeder extends Seeder
             'category_id' => 2,
             'date' => now(),
             'amount' => 2000000,
-            'description' => 'bill',
+            'notes' => 'bill',
             'attachment' => null,
             'type' => 'expense'
         ];

@@ -50,7 +50,7 @@
 
                         <div class="form-group">
                             <label for="" class="col-form-label">Description</label>
-                            <textarea name="description" id="" cols="30" rows="3" class="form-control"></textarea>
+                            <textarea name="notes" id="" cols="30" rows="3" class="form-control"></textarea>
                         </div>
 
                         <div class="form-group">

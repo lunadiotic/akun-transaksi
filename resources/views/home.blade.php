@@ -16,7 +16,7 @@
     <!-- end page title -->
 
     <div class="row">
-        <div class="col-md-6 col-xl-3">
+        <div class="col-md-6">
             <div class="widget-rounded-circle card-box">
                 <div class="row">
                     <div class="col-6">
@@ -34,7 +34,7 @@
             </div> <!-- end widget-rounded-circle-->
         </div> <!-- end col-->
 
-        <div class="col-md-6 col-xl-3">
+        <div class="col-md-6">
             <div class="widget-rounded-circle card-box">
                 <div class="row">
                     <div class="col-6">
@@ -52,7 +52,7 @@
             </div> <!-- end widget-rounded-circle-->
         </div> <!-- end col-->
 
-        <div class="col-md-12 col-xl-12">
+        <div class="col-md-12">
             <div class="widget-rounded-circle card-box">
                 <div class="row">
                     <div class="col-6">
@@ -73,7 +73,7 @@
     <!-- end row-->
 
     <div class="row">
-        <div class="col-xl-4 col-md-6">
+        <div class="col-md-6">
             <div class="card-box">
                 <div class="dropdown float-right">
                     <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
@@ -126,7 +126,7 @@
             </div> <!-- end card-box-->
         </div> <!-- end col-->
 
-        <div class="col-xl-4 col-md-6">
+        <div class="col-md-6">
             <div class="card-box">
                 <div class="dropdown float-right">
                     <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"

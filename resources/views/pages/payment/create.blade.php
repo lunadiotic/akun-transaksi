@@ -43,14 +43,44 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="" class="col-form-label">Amount</label>
-                            <input type="number" name="amount" class="form-control" id="">
-                        </div>
+                        <label for="" class="col-form-label">Item</label>
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Actions</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <tr index="0" id="row-0">
+                                    <td>
+                                        <span class="btn btn-sm btn-danger btn-remove">x</span>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" name="item[0][title]">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control" name="item[0][qty]" value="1">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control" name="item[0][price]">
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5">
+                                        <span class="btn btn-sm btn-success" id="add">+</span>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
 
                         <div class="form-group">
                             <label for="" class="col-form-label">Description</label>
-                            <textarea name="description" id="" cols="30" rows="3" class="form-control"></textarea>
+                            <textarea name="notes" id="" cols="30" rows="3" class="form-control"></textarea>
                         </div>
 
                         <div class="form-group">
@@ -82,5 +112,31 @@
             todayHighlight: true,
             orientation: "bottom"
         });
+    </script>
+    <script>
+        let indexRow = 0;
+        $('#add').click(function() {
+            indexRow++;
+            $('#table-body').append(`
+                <tr index="${indexRow}" id="row-${indexRow}">
+                    <td>
+                        <span class="btn btn-sm btn-danger btn-remove">x</span>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" name="item[${indexRow}][title]">
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" name="item[${indexRow}][qty]" value="1">
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" name="item[${indexRow}][price]">
+                    </td>
+                </tr>
+            `);
+        });
+        $(document).on('click', '.btn-remove', function(){
+           let rowId = $(this).parent().parent().attr("id");
+           $(`#${rowId}`).remove();
+      });
     </script>
 @endpush

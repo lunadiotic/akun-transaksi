@@ -72,7 +72,7 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
+        return $request->all();
         $this->validate($request, [
             'category_id' => 'required',
             'date' => 'required|date',

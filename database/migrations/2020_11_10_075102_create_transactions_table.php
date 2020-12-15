@@ -18,7 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->date('date');
             $table->decimal('amount', 15,2);
-            $table->text('description');
+            $table->text('notes')->nullable();
             $table->string('attachment')->nullable();
             $table->enum('type', ['revenue', 'expense']);
             $table->timestamps();
