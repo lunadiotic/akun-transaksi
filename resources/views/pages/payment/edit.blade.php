@@ -44,6 +44,32 @@
                             </div>
                         </div>
 
+                        <label for="" class="col-form-label">Item</label>
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <?php foreach ($payment->details as $key => $value) : ?>
+                                <tr index="{{ $key }}" id="row-0">
+                                    <td>
+                                        {{ $value->title }}
+                                    </td>
+                                    <td>
+                                        {{ $value->qty }}
+                                    </td>
+                                    <td>
+                                        {{ $value->price }}
+                                    </td>
+                                </tr>
+                                <?php endforeach ?>
+                            </tbody>
+                        </table>
+
                         <div class="form-group">
                             <label for="" class="col-form-label">Amount</label>
                             <input type="number" name="amount" class="form-control" id="" value="{{ $payment->amount }}">
@@ -51,7 +77,7 @@
 
                         <div class="form-group">
                             <label for="" class="col-form-label">Description</label>
-                            <textarea name="description" id="" cols="30" rows="3" class="form-control">{{ $payment->description }}</textarea>
+                            <textarea name="notes" id="" cols="30" rows="3" class="form-control">{{ $payment->notes }}</textarea>
                         </div>
 
                         <div class="form-group">

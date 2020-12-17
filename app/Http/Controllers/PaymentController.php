@@ -166,7 +166,7 @@ class PaymentController extends Controller
         $this->validate($request, [
             'category_id' => 'required',
             'date' => 'required|date',
-            'amount' => 'required|numeric',
+            'amount' => 'sometimes|numeric',
             'description' => 'required',
             'file' => 'sometimes|nullable'
         ]);
