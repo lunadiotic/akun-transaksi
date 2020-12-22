@@ -69,7 +69,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Detail</th>
+                                        <th tyle="width: 20%">Transaction ID</th>
                                         <th>Category</th>
                                         <th style="width: 20%">Receipt</th>
                                         <th style="width: 20%" class="text-right">Total</th>
@@ -82,7 +82,7 @@
                                     <tr>
                                         <td>{{ $no }}</td>
                                         <td>
-                                            <b>{{ $row->description }}</b>
+                                            <b>{{ $row->id }}</b>
                                         </td>
                                         <td>
                                             <b>{{ $row->category->title }}</b>
