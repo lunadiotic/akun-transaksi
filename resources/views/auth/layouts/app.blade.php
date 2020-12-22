@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8" />
-        <title>{{ $title ? $title : config('app.name') }} | Payment and Revenue Transaction</title>
+        <title>{{ isset($title) ? $title : config('app.name') }} | Payment and Revenue Transaction</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A simple notes for transaction" name="description" />
         <meta content="IDStack" name="author" />
@@ -24,9 +24,13 @@
 
     </head>
 
-    <body class="loading auth-fluid-pages pb-0">
+    <body class="loading authentication-bg authentication-bg-pattern">
 
         @yield('content')
+
+        <footer class="footer footer-alt text-white-50">
+            2020 - <script>document.write(new Date().getFullYear())</script> &copy; Akunt by <a href="" class="text-white-50">IDStack</a>
+        </footer>
 
         <!-- Vendor js -->
         <script src="{{ asset('assets/js/vendor.min.js') }}"></script>

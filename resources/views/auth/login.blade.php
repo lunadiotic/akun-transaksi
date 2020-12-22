@@ -1,99 +1,103 @@
 @extends('auth.layouts.app', ['title' => 'Login'])
 
 @section('content')
-<div class="auth-fluid">
-    <!--Auth fluid left content -->
-    <div class="auth-fluid-form-box">
-        <div class="align-items-center d-flex h-100">
-            <div class="card-body">
+<div class="account-pages mt-5 mb-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-pattern">
 
-                <!-- Logo -->
-                <div class="auth-brand text-center text-lg-left">
-                    <div class="auth-logo">
-                        <a href="/" class="logo logo-dark text-center">
-                            <span class="logo-lg">
-                                <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="22">
-                            </span>
-                        </a>
+                    <div class="card-body p-4">
 
-                        <a href="/" class="logo logo-light text-center">
-                            <span class="logo-lg">
-                                <img src="{{ asset('assets/images/logo-light.png') }}" alt="" height="22">
-                            </span>
-                        </a>
-                    </div>
-                </div>
+                        <div class="text-center w-75 m-auto">
+                            <div class="auth-logo">
+                                <a href="#" class="logo logo-dark text-center">
+                                    <span class="logo-lg">
+                                        <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="22">
+                                    </span>
+                                </a>
 
-                <!-- title-->
-                <h4 class="mt-0">Sign In</h4>
-                <p class="text-muted mb-4">Enter your email address and password to access account.</p>
+                                <a href="#" class="logo logo-light text-center">
+                                    <span class="logo-lg">
+                                        <img src="{{ asset('assets/images/logo-light.png') }}" alt="" height="22">
+                                    </span>
+                                </a>
+                            </div>
+                            <p class="text-muted mb-4 mt-3">Enter your email address and password to access admin panel.</p>
+                        </div>
 
-                <!-- form -->
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
-                    <div class="form-group">
-                        <label for="email">E-Mail Address</label>
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Enter your email" autofocus>
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" class="text-muted float-right"><small>Forgot your password?</small></a>
-                        @endif
-                        <label for="password">Password</label>
-                        <div class="input-group input-group-merge">
-                            <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Enter your password" required autocomplete="current-password">
-                            <div class="input-group-append" data-password="false">
-                                <div class="input-group-text">
-                                    <span class="password-eye font-12"></span>
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
+
+                            <div class="form-group mb-3">
+                                <label for="emailaddress">Email address</label>
+                                <input
+                                    class="form-control @error('email') is-invalid @enderror"
+                                    name="email"
+                                    type="email"
+                                    id="emailaddress"
+                                    required=""
+                                    placeholder="Enter your email">
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="password">Password</label>
+                                <div class="input-group input-group-merge">
+                                    <input
+                                     type="password"
+                                     id="password"
+                                     name="password"
+                                     class="form-control @error('password') is-invalid @enderror"
+                                     placeholder="Enter your password">
+                                    <div class="input-group-append" data-password="false">
+                                        <div class="input-group-text">
+                                            <span class="password-eye font-12"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" name="remember" class="custom-control-input" id="checkbox-signin" {{ old('remember') ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="checkbox-signin">Remember me</label>
                                 </div>
                             </div>
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
 
-                    <div class="form-group mb-3">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" name="remember" id="checkbox-signin" {{ old('remember') ? 'checked' : '' }}>
-                            <label class="custom-control-label" for="checkbox-signin">Remember me</label>
-                        </div>
-                    </div>
-                    <div class="form-group mb-0 text-center">
-                        <button class="btn btn-primary btn-block" type="submit">Log In </button>
-                    </div>
-                </form>
-                <!-- end form-->
+                            <div class="form-group mb-0 text-center">
+                                <button class="btn btn-primary btn-block" type="submit"> Log In </button>
+                            </div>
 
-                <!-- Footer-->
-                <footer class="footer footer-alt">
-                    <p class="text-muted">Don't have an account? <a href="{{ route('register') }}" class="text-muted ml-1"><b>Sign Up</b></a></p>
-                </footer>
+                        </form>
+                        <!-- form -->
+                    </div> <!-- end card-body -->
+                </div>
+                <!-- end card -->
 
-            </div> <!-- end .card-body -->
-        </div> <!-- end .align-items-center.d-flex.h-100-->
+                @if (Route::has('password.request'))
+                    <div class="row mt-3">
+                        <div class="col-12 text-center">
+                            <p> <a href="{{ route('password.request') }}" class="text-white-50 ml-1">Forgot your password?</a></p>
+                        </div> <!-- end col -->
+                    </div>
+                @endif
+                <!-- end row -->
+
+            </div> <!-- end col -->
+        </div>
+        <!-- end row -->
     </div>
-    <!-- end auth-fluid-form-box-->
-
-    <!-- Auth fluid right content -->
-    <div class="auth-fluid-right text-center">
-        <div class="auth-user-testimonial">
-            <h2 class="mb-3 text-white">I love the color!</h2>
-            <p class="lead"><i class="mdi mdi-format-quote-open"></i> I've been using your theme from the previous developer for our web app, once I knew new version is out, I immediately bought with no hesitation. Great themes, good documentation with lots of customization available and sample app that really fit our need. <i class="mdi mdi-format-quote-close"></i>
-            </p>
-            <h5 class="text-white">
-                - Fadlisaad (Ubold Admin User)
-            </h5>
-        </div> <!-- end auth-user-testimonial-->
-    </div>
-    <!-- end Auth fluid right content -->
+    <!-- end container -->
 </div>
-<!-- end auth-fluid-->
+<!-- end page -->
 @endsection
